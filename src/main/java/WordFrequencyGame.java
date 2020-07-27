@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class WordFrequencyGame {
@@ -7,10 +6,8 @@ public class WordFrequencyGame {
     public String wordStatistic(String sentence) {
         String[] words = sentence.split("\\s+");
         try {
-            Map<String, Integer> wordMap = getWordFrequencyMap(words);
-
+            Map<String, Integer> wordMap = getWordsFrequencyMap(words);
             List<Input> list = sortWordsFrequencyDesc(wordMap);
-
             return formatWordsFrequency(list);
         } catch (Exception e) {
             return "Calculate Error";
@@ -25,17 +22,16 @@ public class WordFrequencyGame {
     }
 
     private List<Input> sortWordsFrequencyDesc(Map<String, Integer> wordMap) {
-        List<Input> list = new ArrayList<>();
+        List<Input> wordsFrequencyList = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : wordMap.entrySet()) {
             Input input = new Input(entry.getKey(), entry.getValue());
-            list.add(input);
+            wordsFrequencyList.add(input);
         }
-
-        list.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
-        return list;
+        wordsFrequencyList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
+        return wordsFrequencyList;
     }
 
-    private Map<String, Integer> getWordFrequencyMap(String[] words) {
+    private Map<String, Integer> getWordsFrequencyMap(String[] words) {
         Map<String, Integer> wordMap = new HashMap<>();
         for (String word : words) {
             if (!wordMap.containsKey(word)) {
