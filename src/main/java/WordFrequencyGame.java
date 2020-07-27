@@ -1,4 +1,6 @@
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class WordFrequencyGame {
 
@@ -9,16 +11,17 @@ public class WordFrequencyGame {
 
             List<Input> list = sortWordsFrequencyDesc(wordMap);
 
-            StringJoiner joiner = new StringJoiner("\n");
-            for (Input w : list) {
-                String s = w.getValue() + " " + w.getWordCount();
-                joiner.add(s);
-            }
-            return joiner.toString();
+            return formatWordsFrequency(list);
         } catch (Exception e) {
             return "Calculate Error";
         }
 
+    }
+
+    private String formatWordsFrequency(List<Input> list) {
+        return list.stream()
+                .map(input -> String.format("%s %d", input.getValue(), input.getWordCount()))
+                .collect(Collectors.joining("\n"));
     }
 
     private List<Input> sortWordsFrequencyDesc(Map<String, Integer> wordMap) {
