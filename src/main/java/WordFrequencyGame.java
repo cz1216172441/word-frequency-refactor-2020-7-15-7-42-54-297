@@ -5,14 +5,9 @@ public class WordFrequencyGame {
 
     public String wordStatistic(String sentence) {
         String[] words = sentence.split("\\s+");
-        try {
-            Map<String, Integer> wordMap = getWordsFrequencyMap(words);
-            List<Input> list = sortWordsFrequencyDesc(wordMap);
-            return formatWordsFrequency(list);
-        } catch (Exception e) {
-            return "Calculate Error";
-        }
-
+        Map<String, Integer> wordMap = getWordsFrequencyMap(words);
+        List<Input> list = sortWordsFrequencyDesc(wordMap);
+        return formatWordsFrequency(list);
     }
 
     private String formatWordsFrequency(List<Input> list) {
