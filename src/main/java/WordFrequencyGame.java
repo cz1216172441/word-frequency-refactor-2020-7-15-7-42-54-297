@@ -9,26 +9,25 @@ public class WordFrequencyGame {
     public String wordStatistic(String sentence) {
         String[] words = sentence.split("\\s+");
         try {
-            List<Input> inputList = new ArrayList<>();
-            for (String s : words) {
-                Input input = new Input(s, 1);
-                inputList.add(input);
+            Map<String, Integer> wordMap = new HashMap<>();
+            for (String word : words) {
+                if (!wordMap.containsKey(word)) {
+                    wordMap.put(word, 1);
+                } else {
+                    wordMap.put(word, wordMap.get(word) + 1);
+                }
             }
-
-            //get the map for the next step of sizing the same word
-            Map<String, List<Input>> map = getListMap(inputList);
 
             List<Input> list = new ArrayList<>();
-            for (Map.Entry<String, List<Input>> entry : map.entrySet()) {
-                Input input = new Input(entry.getKey(), entry.getValue().size());
+            for (Map.Entry<String, Integer> entry : wordMap.entrySet()) {
+                Input input = new Input(entry.getKey(), entry.getValue());
                 list.add(input);
             }
-            inputList = list;
 
-            inputList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
+            list.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
 
             StringJoiner joiner = new StringJoiner("\n");
-            for (Input w : inputList) {
+            for (Input w : list) {
                 String s = w.getValue() + " " + w.getWordCount();
                 joiner.add(s);
             }
